@@ -2,6 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **改訂（2026-11-25）:** この計画のあと、ユーザーから画面構成（ホーム／集計／レシート入力）とPDFの見本が示されたため、
+> 実装は改訂後の spec（`docs/superpowers/specs/2026-11-25-mogiten-ledger-design.md`）に従った。主な変更：
+> `Store` → `Receipt`、グループ情報と集計（`Summary`）を追加、PDFは見本どおりの「領収書集計」形式（`src/pdf/ledger.ts`）、
+> jsPDF 4.2.1 / jspdf-autotable 5.0.9 / Vitest 3 を使用。以下の Task 6〜8 は画面構成の改訂前の内容。
+
 **Goal:** 模擬店で購入した商品を店ごとに記録し、外税・内税と税率8%/10%を踏まえて集計し、表形式のPDFで出力するスマホ優先のWebアプリを作る。
 
 **Architecture:** 計算・検証・PDFの表データ作りは React に依存しない純粋な TypeScript 関数（`src/domain`, `src/pdf/buildTable.ts`）にまとめ、単体テストで固める。保存は localStorage を包む小さな repository。UI は React の数コンポーネントで、状態は `App` に1つだけ持つ。PDF は jsPDF + jspdf-autotable で、日本語フォントを出力時に読み込んで埋め込む。
