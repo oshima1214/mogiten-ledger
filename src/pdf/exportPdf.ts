@@ -10,7 +10,7 @@ const FONT = 'BIZUDPGothic';
 const FONT_FILE = 'BIZUDPGothic-Regular.ttf';
 const MARGIN = 10;
 const HEAD_FILL: [number, number, number] = [217, 217, 217];
-const AMOUNT_FILL: [number, number, number] = [221, 228, 245];
+const SUMMARY_FILL: [number, number, number] = [221, 228, 245];
 const BORDER: [number, number, number] = [60, 60, 60];
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -101,20 +101,17 @@ export function createPdf(data: AppData, fontBase64: string, now: Date = new Dat
       }
       const row = rowOf(d);
       if (!row) return;
-      const color = storeColor(row.receiptIndex);
-      if (d.column.index < 4) {
-        d.cell.styles.fillColor = d.column.index === 3 ? AMOUNT_FILL : color.tint;
+      // 店と店の間は白い空欄の行（枠線なし）
+      if (row.kind === 'spacer') {
+        d.cell.styles.fillColor = false; // 紙の白のまま（塗ると上の店の下線が消える）
+        d.cell.styles.lineWidth = 0;
+        d.cell.styles.minCellHeight = 4;
         return;
       }
-      // 右端の列: 店名は枠なし・小さい文字、店の合計は店の色で塗る
-      if (row.kind === 'storeEnd') {
-        d.cell.styles.fillColor = color.solid;
-        d.cell.styles.fontSize = row.side.includes('\n') ? 7 : 9;
-        d.cell.styles.lineWidth = 0.2;
-      } else {
-        d.cell.styles.fillColor = false;
-        d.cell.styles.lineWidth = 0;
-        d.cell.styles.valign = 'bottom';
+      // 店の行は、表も店名・店の合計のセルもすべて同じ色
+      d.cell.styles.fillColor = storeColor(row.receiptIndex);
+      if (d.column.index === 4) {
+        d.cell.styles.fontSize = row.kind === 'storeEnd' && !row.side.includes('\n') ? 9 : 7;
       }
     },
   });
@@ -157,7 +154,7 @@ export function createPdf(data: AppData, fontBase64: string, now: Date = new Dat
       columnStyles: { 0: { cellWidth: 26, fillColor: HEAD_FILL }, 1: { cellWidth: 38 } },
       didParseCell: (d) => {
         const label = summaryRows[d.row.index]?.[0];
-        if (d.column.index === 1 && (label === '総費用' || label === '残金')) d.cell.styles.fillColor = AMOUNT_FILL;
+        if (d.column.index === 1 && (label === '総費用' || label === '残金')) d.cell.styles.fillColor = SUMMARY_FILL;
       },
     });
   }

@@ -1,22 +1,17 @@
-/** 店（レシート）ごとの色。PDFとホーム画面で同じ順に使う。 */
-export interface StoreColor {
-  /** 店の合計セル・カードの帯 */
-  solid: [number, number, number];
-  /** 商品行の薄い背景 */
-  tint: [number, number, number];
-}
+export type RGB = [number, number, number];
 
-export const STORE_COLORS: StoreColor[] = [
-  { solid: [255, 230, 0], tint: [255, 251, 214] }, // 黄
-  { solid: [0, 176, 240], tint: [224, 245, 253] }, // 青
-  { solid: [255, 102, 255], tint: [255, 230, 255] }, // 桃
-  { solid: [112, 173, 71], tint: [233, 244, 225] }, // 緑
-  { solid: [255, 192, 0], tint: [255, 242, 204] }, // 橙
-  { solid: [155, 120, 230], tint: [238, 232, 252] }, // 紫
-  { solid: [255, 110, 110], tint: [255, 232, 232] }, // 赤
-  { solid: [0, 200, 180], tint: [220, 247, 243] }, // 青緑
+/** 店（レシート）ごとの色。PDFの表・店名・店の合計と、ホーム画面のカードで同じ色を使う。 */
+export const STORE_COLORS: RGB[] = [
+  [255, 241, 150], // 黄
+  [180, 228, 250], // 青
+  [255, 200, 240], // 桃
+  [205, 232, 185], // 緑
+  [255, 218, 170], // 橙
+  [220, 208, 250], // 紫
+  [255, 200, 200], // 赤
+  [175, 235, 225], // 青緑
 ];
 
-export const storeColor = (index: number): StoreColor => STORE_COLORS[index % STORE_COLORS.length];
+export const storeColor = (index: number): RGB => STORE_COLORS[index % STORE_COLORS.length];
 
-export const rgb = ([r, g, b]: [number, number, number]) => `rgb(${r} ${g} ${b})`;
+export const rgb = ([r, g, b]: RGB) => `rgb(${r} ${g} ${b})`;

@@ -3,7 +3,7 @@ import type { Receipt, Summary } from '../domain/types';
 
 export const LEDGER_HEAD = ['材料・消耗品費等', '消費税8%', '消費税10%', '金額', ''] as const;
 
-export type LedgerRowKind = 'item' | 'tax' | 'storeEnd';
+export type LedgerRowKind = 'item' | 'tax' | 'storeEnd' | 'spacer';
 
 export interface LedgerRow {
   kind: LedgerRowKind;
@@ -26,7 +26,7 @@ export const modeLabel = (r: Receipt) => (r.taxMode === 'exclusive' ? '外税' :
 
 /**
  * 見本の「領収書集計」と同じ並びの表を作る。
- * 店ごとに: 商品行 → 外税なら「外税8%対象」「外税10%対象」（0円は出さない）→ 店の合計の行。
+ * 店と店の間には空欄の行。店ごとに: 商品行 → 外税なら「外税8%対象」「外税10%対象」（0円は出さない）→ 店の合計の行。
  */
 export function buildLedger(receipts: Receipt[]): LedgerTable {
   const rows: LedgerRow[] = [];
@@ -55,6 +55,8 @@ export function buildLedger(receipts: Receipt[]): LedgerTable {
     const end: LedgerRow = { kind: 'storeEnd', receiptIndex, name: '', c8: '', c10: '', amount: '', side: formatNumber(t.total) };
     if (body.length > 0) body[body.length - 1].side = label;
     else end.side = `${label}\n${end.side}`;
+    // 店と店の間に白い空欄の行を入れる
+    if (receiptIndex > 0) rows.push({ kind: 'spacer', receiptIndex, name: '', c8: '', c10: '', amount: '', side: '' });
     rows.push(...body, end);
 
     sum8 += t.subtotal8 + t.tax8;

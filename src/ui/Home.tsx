@@ -10,7 +10,7 @@ export function ReceiptCard(props: { receipt: Receipt; index: number; onEdit(): 
   const shown = receipt.items.slice(0, PREVIEW_ITEM_LIMIT);
   const rest = receipt.items.length - shown.length;
   return (
-    <li className="receipt-card" style={{ borderLeftColor: rgb(storeColor(props.index).solid) }}>
+    <li className="receipt-card" style={{ borderLeftColor: rgb(storeColor(props.index)) }}>
       <div className="receipt-card-main">
         <div className="receipt-card-title">
           <h2>{receipt.storeName}</h2>

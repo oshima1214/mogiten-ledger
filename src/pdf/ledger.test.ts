@@ -24,6 +24,7 @@ test('見本と同じ並び: 商品 → 外税対象 → 店の合計', () => {
     ['item', 0, '竹串', '', '100', '100', ''],
     ['tax', 0, '外税10%対象', '', '30', '30', 'Seria（外税）'],
     ['storeEnd', 0, '', '', '', '', '330'],
+    ['spacer', 1, '', '', '', '', ''],
     ['item', 1, 'レジ袋', '', '3', '3', ''],
     ['item', 1, 'あじわい便り', '378', '', '378', 'TRIAL（内税）'],
     ['storeEnd', 1, '', '', '', '', '381'],
@@ -74,4 +75,9 @@ test('集計とメニュー: 未入力は出さない', () => {
     ['ワッフル', '64'],
     ['おかず', ''],
   ]);
+});
+
+test('空欄の行は店と店の間だけ（先頭と末尾には入れない）', () => {
+  const { rows } = buildLedger([receipt('A', 'inclusive', []), receipt('B', 'inclusive', []), receipt('C', 'inclusive', [])]);
+  expect(rows.map((r) => r.kind)).toEqual(['storeEnd', 'spacer', 'storeEnd', 'spacer', 'storeEnd']);
 });
