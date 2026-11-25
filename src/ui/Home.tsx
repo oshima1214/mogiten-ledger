@@ -1,4 +1,5 @@
 import { calcGrandTotal, calcReceiptTotals, formatYen } from '../domain/calc';
+import { APP_NAME } from '../appName';
 import { rgb, storeColor } from '../domain/colors';
 import type { GroupInfo, Receipt } from '../domain/types';
 
@@ -47,7 +48,7 @@ export function Home(props: {
     <div className="screen home">
       <header className="home-header">
         <button type="button" className="group-name" onClick={props.onEditGroup} aria-label="グループ情報を編集">
-          <span className="group-title">{props.group?.groupName || 'mogiten-ledger'}</span>
+          <span className="group-title">{props.group?.groupName || APP_NAME}</span>
           {props.group?.representative && <span className="group-rep">代表：{props.group.representative}</span>}
         </button>
         <div className="home-actions">

@@ -29,11 +29,15 @@ test('初回: グループ情報 → 店 → 購入品 → ホームに表示', 
   render(<App />);
   expect(screen.getByText('まだレシートがありません。')).toBeInTheDocument();
   expect(btn('PDF出力')).toBeDisabled();
+  expect(screen.getByText('模擬店 領収書集計')).toBeInTheDocument();
+  expect(screen.queryByText(/mogiten/)).not.toBeInTheDocument();
 
   await user.click(btn('＋ レシートを記録'));
   // グループ情報（両方必須）
   await user.click(btn('次へ（購入した店）'));
   expect(screen.getByText('グループ名を入力してください')).toBeInTheDocument();
+  expect(screen.getByLabelText('グループ名')).not.toHaveAttribute('placeholder');
+  expect(screen.getByLabelText('代表者名')).not.toHaveAttribute('placeholder');
   await user.type(screen.getByLabelText('グループ名'), '3年A組');
   await user.type(screen.getByLabelText('代表者名'), '見本 海');
   await user.click(btn('次へ（購入した店）'));

@@ -16,7 +16,7 @@ const BORDER: [number, number, number] = [60, 60, 60];
 const pad = (n: number) => String(n).padStart(2, '0');
 
 export function pdfFileName(now: Date): string {
-  return `mogiten-ledger_${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}.pdf`;
+  return `模擬店領収書集計_${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}.pdf`;
 }
 
 /** 例: 令和8年11月25日 */

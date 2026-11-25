@@ -20,7 +20,7 @@ const data = (itemCount: number): AppData => ({
 
 test('ファイル名と和暦の日付', () => {
   const d = new Date(2026, 10, 25);
-  expect(pdfFileName(d)).toBe('mogiten-ledger_2026-11-25.pdf');
+  expect(pdfFileName(d)).toBe('模擬店領収書集計_2026-11-25.pdf');
   expect(japaneseEraDate(d)).toBe('令和8年11月25日');
 });
 

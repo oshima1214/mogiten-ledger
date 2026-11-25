@@ -140,8 +140,8 @@ export function ReceiptEntry(props: {
         <ScreenHeader title="はじめに" onBack={props.onClose} backLabel="ホーム" />
         <main className="screen-body">
           <p className="lead">最初にグループの情報を入力してください。PDFの見出しに使います。</p>
-          <TextField label="グループ名" value={groupName} onChange={setGroupName} error={groupErrors.groupName} placeholder="例：3年A組" />
-          <TextField label="代表者名" value={representative} onChange={setRepresentative} error={groupErrors.representative} placeholder="例：見本 海" />
+          <TextField label="グループ名" value={groupName} onChange={setGroupName} error={groupErrors.groupName} />
+          <TextField label="代表者名" value={representative} onChange={setRepresentative} error={groupErrors.representative} />
         </main>
         <footer className="screen-footer">
           <button type="button" className="primary" onClick={goGroupNext}>

@@ -19,8 +19,8 @@ export function GroupScreen(props: { group: GroupInfo | null; onSave(group: Grou
     <div className="screen">
       <ScreenHeader title="グループ情報" onBack={props.onBack} backLabel="ホーム" />
       <main className="screen-body">
-        <TextField label="グループ名" value={groupName} onChange={setGroupName} error={errors.groupName} placeholder="例：3年A組" />
-        <TextField label="代表者名" value={representative} onChange={setRepresentative} error={errors.representative} placeholder="例：見本 海" />
+        <TextField label="グループ名" value={groupName} onChange={setGroupName} error={errors.groupName} />
+        <TextField label="代表者名" value={representative} onChange={setRepresentative} error={errors.representative} />
       </main>
       <footer className="screen-footer">
         <button type="button" className="primary" onClick={save}>
